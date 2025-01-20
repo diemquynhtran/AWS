@@ -79,3 +79,4 @@
 ### **Lưu ý về Giá cả**
 - Các lớp lưu trữ trong Amazon S3 có mức chi phí khác nhau, phụ thuộc vào nhu cầu sử dụng và truy xuất dữ liệu.
 - Những lớp lưu trữ có **availability** thấp hơn (như Glacier) thường có chi phí lưu trữ thấp hơn nhưng sẽ có phí truy xuất cao hơn.
+jj
