@@ -46,7 +46,8 @@ Khi một ứng dụng được triển khai chỉ ở một khu vực, người
 
 - **Bảo mật:** Chỉ cần whitelist hai địa chỉ IP và bảo vệ DDoS tự động qua AWS Shield.
 
-**Khác biệt với CloudFront:**
+**Khác biệt với CloudFront:**  
 ![1.png](image/1.png)
+
 - Cả Global Accelerator và CloudFront đều sử dụng mạng lưới toàn cầu và các điểm edge của AWS, nhưng CloudFront chủ yếu tối ưu hóa cho việc phân phối nội dung (tĩnh và động), trong khi Global Accelerator tối ưu hóa cho các ứng dụng sử dụng TCP/UDP, không có cache, và cung cấp địa chỉ IP tĩnh toàn cầu.
 - **Global Accelerator** là lựa chọn tốt cho các ứng dụng không phải HTTP, như game, IoT, VoIP, hoặc các trường hợp cần failover nhanh chóng và địa chỉ IP tĩnh toàn cầu.
