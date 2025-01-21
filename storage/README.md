@@ -41,9 +41,10 @@ FSx hỗ trợ các hệ thống tệp khác nhau, bao gồm:
 
 ### 1. FSx cho Windows File Server
 
-- Đây là dịch vụ Windows File Server được quản lý hoàn toàn, hỗ trợ giao thức SMB và Windows NTFS.
+- Đây là dịch vụ Windows File Server được quản lý hoàn toàn, hỗ trợ giao thức SMB (Server Message Block) và Windows NTFS.
 - Tính năng đặc biệt:
   - Tích hợp với Microsoft Active Directory để bảo mật người dùng.
+  - 1Az -> multi Az
   - Hỗ trợ ACL (Danh sách kiểm soát truy cập) và user quotas.
   - Có thể gắn kết FSx trên các Linux EC2 instances.
   - Hỗ trợ kết nối với Windows File Server tại *on-premises* thông qua tính năng DFS (Distributed File System).
@@ -87,6 +88,97 @@ FSx hỗ trợ các hệ thống tệp khác nhau, bao gồm:
   - Hiệu suất cao với khả năng mở rộng lên đến 1 triệu IOPS và độ trễ dưới 0.5 ms.
   - Hỗ trợ các tính năng như sao lưu, nén dữ liệu và **point-in-time cloning**.
   - Tuy nhiên, không hỗ trợ tính năng deduplication như FSx cho NetApp ONTAP.
+---
+
+# 178. Storage Gateway
+![6.png](image/6.png)
+
+- Hybrid Cloud: Một phần cơ sở hạ tầng của bạn sẽ ở trên đám mây của AWS, phần còn lại sẽ vẫn lưu trữ tại chỗ (on-premises). Điều này có thể do nhiều lý do, như yêu cầu bảo mật, yêu cầu trước đây, hoặc chiến lược chỉ sử dụng đám mây cho elastic workloads.
+- AWS Storage Gateway: Là cầu nối giữa dữ liệu tại chỗ và dữ liệu đám mây của AWS. Dịch vụ này giúp di chuyển dữ liệu giữa hạ tầng tại chỗ và đám mây.
+
+### Các Loại Dịch Vụ Lưu Trữ Trên AWS
+
+1. Block Storage: Ví dụ như Amazon EBS hoặc EC2 Instance Store.
+2. File Systems: Bao gồm Amazon EFS và Amazon FSx.
+3. Object-Level Storage: Chẳng hạn như Amazon S3 hoặc Amazon Glacier.
+
+### Các Loại Storage Gateway
+
+1. **Amazon S3 File Gateway**:
+   ![2.png](image/2.png)
+
+  - Chức năng: Kết nối Amazon S3 bucket với các máy chủ ứng dụng tại chỗ thông qua các giao thức NFS hoặc SMB.
+  - Cách hoạt động: Sử dụng các giao thức này, Storage Gateway sẽ chuyển đổi các yêu cầu thành các yêu cầu HTTPS tới Amazon S3.
+  - Lưu ý: Bạn có thể thiết lập các lifecycle policy để chuyển các đối tượng sang Glacier để lưu trữ lâu dài.
+  - Tính năng: Dữ liệu được truy cập gần đây sẽ được lưu trữ tạm trong S3 File Gateway để truy cập nhanh hơn.
+
+2. **Amazon FSx File Gateway**:
+   ![3.png](image/3.png)
+
+  - Chức năng: Cung cấp quyền truy cập gốc vào Amazon FSx cho Windows File Server.
+  - Lý do sử dụng: Tạo một bộ nhớ đệm (cache) tại chỗ cho các dữ liệu hay được truy cập, giảm độ trễ khi truy cập dữ liệu quan trọng.
+  - Tính tương thích: Hỗ trợ các giao thức SMB và Active Directory cho xác thực người dùng.
+
+3. **Volume Gateway**:
+  - Chức năng: Sử dụng iSCSI protocol để lưu trữ khối dữ liệu, được sao lưu bằng Amazon EBS snapshots.
+  - Các loại:
+    - Cached volumes: Truy cập nhanh dữ liệu gần đây.
+    - Stored volumes: Dữ liệu hoàn toàn lưu trữ tại chỗ và sao lưu định kỳ lên Amazon S3.
+  - Lý do sử dụng: Sao lưu các volumes từ các máy chủ ứng dụng tại chỗ.
+
+4. **Tape Gateway**:
+  - Chức năng: Dành cho các công ty sử dụng hệ thống sao lưu bằng băng từ (tape). Dữ liệu sao lưu sẽ được lưu trữ trên đám mây, sử dụng Amazon S3 hoặc Glacier.
+  - Tính năng: Hỗ trợ Virtual Tape Library (VTL) và giao thức iSCSI để kết nối với các phần mềm sao lưu của bên thứ ba.
+    ![4.png](image/4.png)
+
+### Storage Gateway Hardware Appliance
+- Cầu nối phần cứng: Nếu bạn không có máy chủ ảo hóa tại chỗ, bạn có thể sử dụng Storage Gateway Hardware Appliance từ AWS.
+- Chức năng: Đây là một thiết bị phần cứng nhỏ được cài đặt tại cơ sở hạ tầng của bạn, giúp chạy các gateway như File Gateway, Volume Gateway, hoặc Tape Gateway mà không cần ảo hóa.
+
+# 180. AWS Transfer Family
+![7.png](image/7.png)  
+AWS Transfer Family cho phép bạn truyền tải dữ liệu vào và ra từ Amazon S3 hoặc EFS mà không cần sử dụng S3 APIs hoặc EFS network file system, chỉ cần sử dụng giao thức FTP.
+
+Dịch vụ này hỗ trợ ba giao thức:
+- **FTP**: Giao thức truyền tải tệp không mã hóa.
+- **FTPS**: FTP qua SSL, phiên bản mã hóa.
+- **SFTP**: Giao thức truyền tải tệp an toàn.
+
+### Tính Năng và Cách Thức Hoạt Động
+
+- **AWS Transfer Family** là một hạ tầng quản lý hoàn toàn, có khả năng mở rộng, đáng tin cậy và có độ khả dụng cao. Bạn chỉ cần quản lý khả năng này mà không cần lo lắng về hạ tầng.
+- **Giá cả**: Bạn sẽ trả phí theo giờ cho mỗi endpoint được cấp phát, cộng với phí truyền tải dữ liệu vào và ra khỏi dịch vụ.
+- Bạn có thể lưu trữ và quản lý thông tin đăng nhập của người dùng trong dịch vụ hoặc tích hợp với hệ thống xác thực hiện có như **Active Directory**, **LDAP**, **Okta**, **Amazon Cognito** hoặc bất kỳ nguồn tùy chỉnh nào.
+
+### Ứng Dụng
+
+AWS Transfer Family rất hữu ích khi cần giao diện FTP vào Amazon S3 hoặc EFS để chia sẻ tệp, chia sẻ bộ dữ liệu công cộng, hoặc sử dụng cho các ứng dụng như CRM, ERP, v.v.
+
+### Sơ Đồ Hoạt Động
+- Dịch vụ Transfer Family hỗ trợ ba phiên bản, người dùng có thể truy cập trực tiếp vào các endpoint FTP hoặc có thể sử dụng **Route 53** để cung cấp tên miền riêng cho dịch vụ FTP.
+- Khi đó, dịch vụ FTP của Transfer Family sẽ có một IAM role được giả định để gửi hoặc đọc tệp từ Amazon S3 hoặc Amazon EFS.
+- Việc này diễn ra một cách minh bạch, bạn không cần thiết lập quá nhiều.
 
 ---
 
+# 181. DataSync Overview 
+![8.png](image/8.png) 
+AWS DataSync là một dịch vụ rất phổ biến trong kỳ thi và rất đơn giản để hiểu. Nó được thiết kế để đồng bộ hóa dữ liệu, di chuyển khối lượng lớn dữ liệu từ các vị trí khác nhau, ví dụ như từ **on-premises** hoặc các đám mây khác vào AWS.
+
+- **Dữ liệu và Metadata**: DataSync có khả năng giữ nguyên quyền truy cập tệp và metadata, tuân thủ các hệ thống tệp NFS POSIX và quyền SMB. Điều này rất quan trọng khi di chuyển dữ liệu từ một vị trí này sang vị trí khác, bảo đảm tính toàn vẹn và bảo mật của dữ liệu.
+- **Băng thông**: Mỗi agent có thể xử lý lên đến 10 gigabits mỗi giây, nhưng bạn có thể thiết lập giới hạn băng thông nếu không muốn sử dụng hết băng thông mạng.
+- Không liên tục
+### Các Kịch Bản Sử Dụng
+
+1. **Di chuyển từ on-premises vào AWS và ngược lại**:
+![9.png](image/9.png) 
+  - Cài đặt **DataSync agent** tại **on-premises** và kết nối với các máy chủ SMB hoặc NFS.
+  - Sau đó, agent sẽ kết nối an toàn với dịch vụ DataSync và di chuyển dữ liệu đến các dịch vụ như S3, EFS, hoặc FSx.
+  - DataSync có thể đồng bộ hóa dữ liệu từ AWS về **on-premises**, không chỉ đơn giản là di chuyển dữ liệu mà còn đồng bộ hóa metadata và quyền truy cập tệp.
+  - Nếu không có đủ năng lực mạng, bạn có thể sử dụng **AWS Snowcone**, thiết bị với DataSync agent được cài sẵn. Snowcone sẽ thu thập dữ liệu tại **on-premises**, sau đó chuyển về AWS và đồng bộ hóa dữ liệu với các tài nguyên lưu trữ của AWS.
+
+4. **Đồng bộ hóa giữa các dịch vụ AWS**:
+  - DataSync có thể đồng bộ hóa giữa các dịch vụ lưu trữ AWS như S3, EFS, hoặc FSx mà vẫn **giữ nguyên/ bảo toàn** metadata và quyền truy cập tệp.
+
+# Compare
+![10.png](image/10.png)

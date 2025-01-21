@@ -76,6 +76,39 @@
     - **Archive Access**: Tầng lưu trữ dài hạn, có thể cấu hình từ 90 đến hơn 700 ngày.
     - **Deep Archive Access**: Dành cho đối tượng không được truy cập trong vòng 180 đến hơn 700 ngày.
 
+# 142. S3 Lifecycle Rules 
+### Chuyển Đổi Giữa Các Lớp Lưu Trữ trong Amazon S3
+
+- **Các lớp lưu trữ**: Bạn có thể di chuyển đối tượng giữa các lớp lưu trữ khác nhau như từ **Standard** sang **Standard IA**, **Intelligent Tiering**, **One-Zone IA**, và từ **One-Zone IA** sang **Flexible Retrieval** hoặc **Deep Archive**.
+- **Di chuyển đối tượng**: Nếu đối tượng ít được truy cập, có thể chuyển sang **Standard IA**. Nếu cần lưu trữ lâu dài, chuyển sang **Glacier** hoặc **Deep Archive**.
+
+### Lifecycle Rules
+
+- **Quy tắc vòng đời** giúp tự động chuyển đổi đối tượng giữa các lớp lưu trữ hoặc xóa đối tượng sau một khoảng thời gian nhất định.
+  - **Transition action**: Chuyển đối tượng sang lớp lưu trữ khác sau một khoảng thời gian nhất định (ví dụ: chuyển sang **Standard IA** sau 60 ngày, chuyển sang **Glacier** sau 6 tháng).
+  - **Expiration action**: Xóa đối tượng sau một khoảng thời gian (ví dụ: xóa log truy cập sau 365 ngày, xóa phiên bản cũ nếu đã bật **versioning**, hoặc xóa các upload chưa hoàn thành sau 2 tuần).
+
+- Quy tắc có thể được áp dụng cho:
+  - Một **prefix** cụ thể trong bucket.
+  - Một **path** trong bucket.
+  - Các **object tags** cụ thể (ví dụ: chỉ áp dụng cho các đối tượng thuộc phòng ban tài chính).
+
+### Các Kịch Bản Ví Dụ
+
+1. **Kịch bản 1 - Ứng dụng EC2 tạo ảnh thu nhỏ (thumbnails)**:
+  - **S3 source images**: Lưu trữ trong **Standard** với quy tắc vòng đời để chuyển sang **Glacier** sau 60 ngày.
+  - **Thumbnails images**: Lưu trữ trong **One-Zone IA** và xóa sau 60 ngày vì chúng có thể dễ dàng tái tạo.
+
+2. **Kịch bản 2 - Khôi phục đối tượng bị xóa**:
+  - **S3 Versioning**: Bật **versioning** để giữ các phiên bản đối tượng bị xóa, và sử dụng **delete marker** để ẩn chúng. Các đối tượng không phải phiên bản hiện tại sẽ được chuyển sang **Standard IA** và sau đó chuyển sang **Glacier Deep Archive** để lưu trữ.
+
+### S3 Analytics
+
+- **Amazon S3 Analytics** cung cấp các đề xuất cho việc chuyển đổi đối tượng giữa **Standard** và **Standard IA**, nhưng không hỗ trợ cho **One-Zone IA** hoặc **Glacier**.
+- **S3 Analytics** tạo ra báo cáo CSV hàng ngày giúp bạn hiểu cách tối ưu hóa quy tắc vòng đời và đưa ra các đề xuất về thời gian chuyển đổi.
+- Báo cáo có thể mất từ 24 đến 48 giờ để cập nhật dữ liệu phân tích.
+
+
 # 144. Requester Pays
 - Các bucket owners sẽ trả tiền cho Amazon S3 storage và data-transfer costs liên quan đến các bucket của họ.
 - Một requester tải xuống một file từ bucket.
