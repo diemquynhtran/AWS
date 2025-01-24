@@ -2,6 +2,9 @@
 
 
 # LB  
+- Chỉ có NLB cung cấp cả static DNS name và static IP
+- ALB cung cấp 1 static DNS name. Reason: AWS muốn ELB có thể được access như một static endpoint ngay cả khi infra của AWS thay đổi 
+- cookie names are reserved by the ELB (AWSALB, AWSALBAPP, AWSALBTG).
 ## ALB  
 
 ## NLB  

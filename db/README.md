@@ -21,7 +21,7 @@
 # 238. ElastiCache
 - Managed Redis/Memcached 
 - in memory data store 
-- Need code choice 
+- Need code change 
 - Use case: Key value store, Frequent read, less write, cache result for DB queries, store session, cannot use SQL
 
 # 239. DynamoDB
