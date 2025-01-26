@@ -80,3 +80,45 @@ Gateway Load Balancer rất hữu ích cho việc kiểm tra và xử lý lưu l
 
 ---
 
+# 80. Sticky Sessions
+- Work for: Classic/Application/Network LB. 
+- Type:
+  - Application-base cookies:
+    - Các custom cookie không được trùng với: AWSALB, AWSALBAPPOR hoặc AWSALBTG
+  - Duration-based cookies:
+    - Được tạo bởi LB
+    - Name: AWSALB for ALB, AWSELB for CLB 
+
+# 81. Cross zone 
+### ALB 
+- Enabled by default
+- No charges 
+
+### NLB & GLB
+- Disabled by default
+- charges
+
+# 82. SSL/TLS 
+- SNI: Server name indication 
+  - Work with ALB & NLB 
+  - 
+
+# 84. Connection Draining 
+- Tên gọi with LB:
+  - Classic Load Balancer: gọi là **Connection Draining**.
+  - Application Load Balancer hoặc Network Load Balancer: gọi là **Deregistration Delay**.
+
+- Giúp các EC2 instances có thời gian hoàn thành các inflight requests khi bị deregistered hoặc đánh dấu là unhealthy.
+  - Khi một instance vào trạng thái draining, Elastic Load Balancer (ELB) sẽ ngừng gửi yêu cầu đến EC2 instance đó.
+  - Người dùng đang kết nối với EC2 instance trong trạng thái draining sẽ có đủ thời gian để hoàn thành yêu cầu hiện tại.
+  - Các kết nối mới sẽ được chuyển đến các EC2 instances khác thay vì instance đang draining.
+
+- Thời gian draining có thể được cấu hình từ 1 đến 3,600 giây.
+- Mặc định là 300 giây.
+- Có thể tắt tính năng draining nếu thiết lập giá trị là 0 giây.
+  - Yêu cầu ngắn: Nếu yêu cầu rất ngắn (dưới 1 giây), có thể thiết lập Connection Draining ở mức thấp (ví dụ: 30 giây) để EC2 instance tắt nhanh.
+  - Yêu cầu dài: Nếu yêu cầu kéo dài (ví dụ: tải lên hoặc yêu cầu lâu dài), cần thiết lập thời gian draining lâu hơn, nhưng EC2 instance sẽ không bị tắt ngay lập tức.
+
+# 87. ASG Policies 
+### Scaling Cooldowns 
+![2.png](image/2.png)
