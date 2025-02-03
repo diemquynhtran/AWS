@@ -1,4 +1,10 @@
 # VPC
+- AWS Network Firewall:  allows you to protect and control traffic in your VPC from layer 3 to layer 7?
+- VPC Flow Logs: capture thông tin IP traffic 
+
+
+
+
 
 
 # LB  

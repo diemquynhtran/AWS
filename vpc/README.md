@@ -194,7 +194,6 @@ Thành phần:
     - **Kết nối tới AWS**: Sử dụng Direct Connect để kết nối với các VPC trong các khu vực khác nhau thông qua **Direct Connect Gateway**.
     - **Tạo kết nối**: Sử dụng **private VIF** để kết nối tới các VPC trong khu vực.
 
-Cảm ơn bạn đã chỉ ra! Đây là phần **Loại kết nối Direct Connect** đầy đủ hơn:
 
 ### **Connection Type**:
 - Cả hai loại kết nối đều có thể thay đổi dung lượng (chẳng hạn như tăng từ 1 Gbps lên 10 Gbps) trong các khu vực hỗ trợ.
@@ -227,5 +226,50 @@ Cảm ơn bạn đã chỉ ra! Đây là phần **Loại kết nối Direct Conn
   - Set up secondary DX connection => more expensive
   - Using a Site-to-site VPN connection => ok, vì public internet sẽ ít mất mạng hơn 
 
+
+# 345. Transit Gateway
+![img_11.png](img_11.png)
+
+- Transit Gateway giúp kết nối các VPC một cách dễ dàng mà không cần phải peering từng VPC với nhau.
+- Transit Gateway cho phép kết nối trực tiếp Direct Connect Gateway, site-to-site VPN, và các kết nối khác vào Transit Gateway.
+- Tất cả các VPC có thể giao tiếp với nhau thông qua Transit Gateway.
+
+
+- Transit Gateway là regional resource, nhưng có thể hoạt động cross-region.
+- Share cross-account sử dụng Resource Access Manager.
+
+- Route tables cho Transit Gateway để kiểm soát những VPC có thể giao tiếp với nhau.
+    - Bạn có toàn quyền kiểm soát việc định tuyến lưu lượng trong Transit Gateway, giúp bảo mật mạng tốt hơn.
+
+### Các trường hợp sử dụng Transit Gateway
+#### Hỗ trợ IP Multicast
+- Transit Gateway là dịch vụ duy nhất trong AWS hỗ trợ IP multicast, nếu bạn gặp câu hỏi về IP multicast trong kỳ thi, Transit Gateway là dịch vụ bạn cần sử dụng.
+
+#### Tăng băng thông kết nối VPN site-to-site bằng ECMP
+![img_12.png](img_12.png)
+- **ECMP** (Equal-Cost Multi-Path Routing) là chiến lược định tuyến cho phép chuyển tiếp gói tin qua nhiều đường đi tối ưu.
+- Bạn có thể sử dụng nhiều kết nối VPN site-to-site để tăng băng thông kết nối với AWS thông qua **Transit Gateway**.
+
+### Chia sẻ kết nối Direct Connect giữa các tài khoản
+![img_13.png](img_13.png) 
+- Bạn có thể chia sẻ kết nối Direct Connect giữa nhiều tài khoản và VPC thông qua Transit Gateway.
+- Các kết nối này giúp tiết kiệm chi phí và cải thiện khả năng mở rộng, đặc biệt khi có nhiều tài khoản hoặc VPC cần sử dụng kết nối Direct Connect chung.
+
+# 346.VPC Traffic Mirroring 
+![img_14.png](img_14.png)
+
+# 347. IPv6 for VPC 
+IPv4 không thể disable cho VPC & subnets
+- Khi không thể launch new instance => hết IPv4 => Tạo new IPv4 CIDR trong subnet 
+
+![img_15.png](img_15.png)
+
+![img_16.png](img_16.png)
+
+# 349. Egress only Internet Gateway 
+- Sử dụng cho IPv6 only (simply NAT but for IPv6) 
+![img_17.png](img_17.png) 
+
+![img_18.png](img_18.png) 
 
 
