@@ -226,7 +226,7 @@
 **Paid Metrics**: Bao gồm các chỉ số chi tiết như hoạt động, tối ưu hóa chi phí nâng cao, bảo vệ dữ liệu nâng cao và trạng thái mã lỗi HTTP. Dữ liệu cho các chỉ số này có sẵn trong 15 tháng và có thể xuất bản vào CloudWatch.
 
 # 150. S3 Object Encryption
-
+![img.png](img.png)
 ### Các phương pháp mã hóa đối tượng trong S3:
 ### **Server-side encryption (SSE)** 
   - **SSE-S3 (Server-Side Encryption with Amazon S3-managed keys):
