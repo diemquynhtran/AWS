@@ -60,3 +60,9 @@
 - Amazon FSx for Lustre provides a high-performance file system optimized for fast processing of workloads such as machine learning, high-performance computing (HPC), video processing, financial modeling, and electronic design automation (EDA).
 - FSx hoạt động trực tiếp với S3: S3 object được biểu diễn giống 1 file trong file system và có thể write back to S3 
 - 
+
+
+# KMS
+- Can multi region -> Primary + replica
+  - use case: global client side, dynamo global, aurora global 
+  - 

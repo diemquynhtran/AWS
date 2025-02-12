@@ -41,8 +41,6 @@ Ví dụ, nếu bạn có một **CIDR block 10.0.0.0/24**, thì các địa ch�
 
 # 329. NAT Instance 
 ![img.png](img.png)
-
-
 --- 
 
 # 333. NACL vs Security Group 
