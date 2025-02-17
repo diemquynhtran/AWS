@@ -1,3 +1,15 @@
+# [TOC]
+- [Instance Types](#34-instance-types)
+- [Purchasing Options](#44-purchasing-options)
+- [Placement Groups](#50-placement-groups)
+- [Elastic Network Interfaces](#52-elastic-network-interfaces-)
+- [EC2 Hibernate](#55-ec2-hibernate-)
+- [EBS](#57-ebs-overview)
+- [AMI](#61-ami-overview-)
+- [EC2 Instance Store](#63-ec2-instance-store-)
+- [EBS Volume Types](#64-ebs-volume-types-)
+- [Elastic File System](#67-elastic-file-system-)
+
 # 34. Instance Types
 - **General Purpose**: Cân bằng CPU, bộ nhớ, mạng, phù hợp cho công việc đa dạng như máy chủ web.
 - **Compute Optimized**: Tối ưu hóa cho các công việc cần CPU mạnh mẽ, ví dụ: học máy, máy chủ game.
@@ -5,9 +17,8 @@
 - **Storage Optimized**: Tối ưu hóa cho các công việc yêu cầu truy cập dữ liệu nhanh trên bộ lưu trữ, ví dụ: OLTP.
 
 1. **General Purpose**
-   - Cân bằng giữa CPU, bộ nhớ và mạng.
-   - Phù hợp cho các công việc đa dạng như máy chủ web, kho mã nguồn.
-   - Ví dụ: **T2.micro** (dùng trong khóa học này, nằm trong tầng miễn phí của AWS).
+- Cân bằng giữa CPU, bộ nhớ và mạng.
+- Phù hợp cho các công việc đa dạng như máy chủ web, kho mã nguồn.
 
 2. **Compute Optimized**
   - Tối ưu hóa cho các tác vụ yêu cầu CPU mạnh mẽ như xử lý dữ liệu theo lô, mã hóa phương tiện, máy chủ web hiệu suất cao, tính toán HPC (High Performance Computing), học máy, máy chủ game chuyên dụng.
@@ -22,11 +33,6 @@
   - Tối ưu hóa cho việc truy cập dữ liệu lớn trên bộ nhớ lưu trữ cục bộ.
   - Phù hợp cho các hệ thống xử lý giao dịch trực tuyến (OLTP), cơ sở dữ liệu quan hệ và NoSQL, hệ thống tệp phân tán.
   - Ví dụ: **I series**, **G series**, **H1**.
-
-- **General Purpose**: Cân bằng CPU, bộ nhớ, mạng, phù hợp cho công việc đa dạng như máy chủ web.
-- **Compute Optimized**: Tối ưu hóa cho các công việc cần CPU mạnh mẽ, ví dụ: học máy, máy chủ game.
-- **Memory Optimized**: Tối ưu hóa bộ nhớ cho các công việc như cơ sở dữ liệu in-memory, BI.
-- **Storage Optimized**: Tối ưu hóa cho các công việc yêu cầu truy cập dữ liệu nhanh trên bộ lưu trữ, ví dụ: OLTP.
 
 # 44. Purchasing Options
 ![1.png](image/1.png)
@@ -97,6 +103,7 @@ Placement Groups là một chiến lược giúp người dùng kiểm soát cá
      - **Sử dụng**: Các công việc big data hoặc ứng dụng yêu cầu độ trễ cực thấp và băng thông cao giữa các instances.
 
 2. **Spread Placement Group**
+Spread Placement Group: places your EC2 instances on different physical hardware across different AZs.
      - Các EC2 instances được phân bổ trên phần cứng khác nhau, với giới hạn 7 EC2 instances mỗi Placement Group mỗi AZ.
      - **Ưu điểm**: Giảm thiểu rủi ro mất mát đồng thời vì các instances được phân bổ trên các phần cứng khác nhau, giúp bảo vệ ứng dụng khỏi sự cố phần cứng.
      - **Nhược điểm**: Giới hạn 7 instances mỗi AZ, không phù hợp với ứng dụng quy mô lớn.
@@ -192,12 +199,6 @@ Khi sử dụng **EC2 Instance Store**, bạn phải chịu trách nhiệm sao l
 Nếu bạn cần hiệu suất lưu trữ cực kỳ cao và không yêu cầu bền vững lâu dài, **EC2 Instance Store** là lựa chọn tuyệt vời. Tuy nhiên, hãy chắc chắn rằng bạn có biện pháp sao lưu và quản lý dữ liệu một cách thích hợp, vì đây là **ephemeral storage** (lưu trữ tạm thời).
 
 # 64. EBS Volume Types 
-Cảm ơn bạn đã phản hồi! Mình sẽ chỉnh lại bản tóm tắt sao cho hợp lý hơn và dễ hiểu hơn.
-
----
-
-### Tổng quan về EBS Volumes và Các Loại EBS
-
 **EBS (Elastic Block Store)** là dịch vụ lưu trữ khối cho các EC2 instances, với 6 loại volume khác nhau, chia thành các nhóm dựa trên mục đích sử dụng và hiệu suất. Mỗi loại volume sẽ có đặc điểm riêng và phù hợp với những nhu cầu công việc khác nhau.
 ### Các lưu ý quan trọng khi sử dụng:
 - **gp2 và gp3**: Phù hợp cho các ứng dụng yêu cầu hiệu suất ổn định và chi phí hợp lý. Thích hợp cho các ứng dụng phát triển, thử nghiệm hoặc hệ thống cần ổn định.
@@ -298,7 +299,7 @@ Khi bạn tạo và mã hóa một EBS volume thì:
 
 ---
 
-# 69. EBS và EBS 
+# 69. EBS và EFS 
 ![7.png](image/7.png)
 
 ![8.png](image/8.png)

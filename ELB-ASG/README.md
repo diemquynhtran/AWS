@@ -101,8 +101,8 @@ Gateway Load Balancer rất hữu ích cho việc kiểm tra và xử lý lưu l
 # 82. SSL/TLS 
 - SNI: Server name indication 
   - Work with ALB & NLB 
-  - 
-
+  - allows you to expose multiple HTTPS applications each with its own SSL certificate on the same listener
+  - allows you to load multiple SSL certificates on one listener
 # 84. Connection Draining 
 - Tên gọi with LB:
   - Classic Load Balancer: gọi là **Connection Draining**.

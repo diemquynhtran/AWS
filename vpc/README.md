@@ -82,7 +82,7 @@ Khi **client** kết nối đến **server**, nó sẽ mở một cổng tạm t
 - Mục đích: **Các VPC này hoạt động như thể chúng nằm trong cùng một mạng.** Điều này rất hữu ích khi bạn muốn chia sẻ tài nguyên giữa các VPC khác nhau mà không cần phải di chuyển dữ liệu qua internet.
 - Khi bạn kết nối hai **VPC**, các **CIDR blocks** của chúng phải không được overlap. Nếu **CIDR** của hai **VPC** trùng lặp, chúng sẽ không thể giao tiếp với nhau.
 - **Cập nhật các bảng định tuyến** trong các **subnet** của mỗi **VPC**. Điều này rất quan trọng để đảm bảo rằng các **instance** trong các **VPC** khác nhau có thể giao tiếp được với nhau.
-- Giống như **Security Groups**, bạn có thể tham chiếu đến **Security Groups** của một **VPC Peered** trong cùng một khu vực mà không cần phải sử dụng **CIDR** hoặc **IP address**. Điều này giúp việc cấu hình bảo mật trở nên linh hoạt và dễ dàng hơn.
+- Giống như **Security Groups**, bạn có thể tham chiếu đến **Security Groups** của một **VPC Peered** trong **cùng một REGION** mà không cần phải sử dụng **CIDR** hoặc **IP address**. Điều này giúp việc cấu hình bảo mật trở nên linh hoạt và dễ dàng hơn.
 ![img_4.png](img_4.png)
 ---
 # 337. VPC Endpoint

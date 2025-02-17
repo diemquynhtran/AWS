@@ -8,7 +8,7 @@
 Giao tiếp đồng bộ có thể gặp vấn đề khi một dịch vụ quá tải, ví dụ như trong trường hợp mã hóa video. Khi đó, tốt hơn là sử dụng mô hình bất đồng bộ để giảm tải, sử dụng các dịch vụ như **SQS** (queue), **SNS** (pub/sub) hoặc **Kinesis** (real-time streaming). Những dịch vụ này giúp các ứng dụng có thể mở rộng và hoạt động độc lập, đồng thời xử lý lưu lượng cao hiệu quả.
 
 # 184. SQS 
-
+- Default: 120000 ms(standard) and 20000ms (fifo)
 ### **Producer & Consumer**
 - **Producer**: Là ứng dụng hoặc dịch vụ gửi thông điệp vào **SQS queue**.
     - Có thể có một hoặc nhiều producer gửi thông điệp vào queue.
@@ -208,3 +208,4 @@ Mô hình này phù hợp khi client không cần confirm rằng việc insert �
 ![11.png](image/11.png)  
 
 ![12.png](image/12.png)
+
