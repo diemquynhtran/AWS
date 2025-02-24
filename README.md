@@ -1,3 +1,16 @@
+# Cost
+## Cost Explorer
+- chi tiết về chi tiêu và mức sử dụng của bạn theo định dạng đồ họa, có thể lọc và nhóm theo các tham số như region, instance type, tag
+- không đưa ra rcm
+## Compute Optimizer
+- Tính toán và rcm tối ưu cho những service cụ thể aws như: EC2, EBS, lambda,...
+
+
+## Cost and Usage Report
+- báo cáo rất chi tiết về chi tiêu và mức sử dụng nhưng không đưa ra rcm
+
+
+
 # VPC
 - **cannot** specify URLs in security group rules
 - VPC Flow Logs: capture thông tin IP traffic
@@ -94,6 +107,9 @@ Có 3 chỉ số: avg CPU Utilization | avg Ram | ALB request count per target (
 # NAT
 ![1.jpg](image/1.jpg)  
 
+# DataSync 
+- AWS DataSync can be used to automate and accelerate the replication of data to AWS storage services
+- ![img_2.png](img_2.png)
 
 # Kinesis 
 - Amazon Kinesis is a fully managed, scalable service that can ingest, buffer, and process streaming data in real-time.
@@ -121,11 +137,13 @@ Có 3 chỉ số: avg CPU Utilization | avg Ram | ALB request count per target (
 - maximum message size of 256 KB so the message body
 
 # Redshift
-- Redshift is designed for batch analytics, not real-time streaming analytics.
+- Redshift is designed for batch analytics, not real-time streaming analytics (cannot provide millisecond responsiveness.)
 - RedShift Spectrum is not serverless as it requires a RedShift cluster which is based on EC2 instances.
+- RedShift Spectrum query data có cấu trúc + không ctruc từ S3 file mà ko cần load vào 
 
 # AWS Batch 
 - AWS Batch is designed to run jobs across multiple instances
+- For HPC chạy trên nhiều node (EC2??)...
 
 # Private Link
 - Nên đc tạo ở consumer VPC, not provider VPC (example: VPC access ECS => VPC is consumer)
@@ -198,7 +216,8 @@ AWS RAM does not apply to Reserved Instances. It is used to share other resource
 - AWS Systems Manager Maintenance Windows được thiết kế để chọn một khoảng thời gian xác định mà các phiên bản EC2 của bạn sẽ được vá
 
 # EFA 
-Amazon Elastic Fabric Adapter: optimize network performance for HPC (high-performance computing) 
+- Amazon Elastic Fabric Adapter: optimize network performance for HPC (high-performance computing)
+- Elastic Fabric Adapter is an AWS Elastic Network Adapter (ENA) with added capabilities
 
 # CloudFormation - IAC on AWS
 - Regional service: định nghĩa và tự động tạo cơ sở hạ tầng AWS dưới dạng code 
@@ -232,8 +251,11 @@ Amazon Elastic Fabric Adapter: optimize network performance for HPC (high-perfor
 - **Instance-attached Storage**: Dùng EBS (Elastic Block Store) có thể đạt đến 256,000 IOPS với io2 Block Express hoặc sử dụng Instant Store với hàng triệu IOPS, gắn liền với instance EC2.
 - **Network Storage**:
   - **Amazon S3**: Lưu trữ dữ liệu lớn (objects).
-  - **EFS**: Hệ thống tệp phân tán với khả năng mở rộng IOPS dựa trên kích thước tệp hệ thống.
+  - **EFS**: Hệ thống tệp phân tán với khả năng mở rộng IOPS dựa trên kích thước tệp hệ thống, work with Farget.
   - **FSX for Lustre**: Hệ thống tệp tối ưu cho HPC, hỗ trợ hàng triệu IOPS và được hỗ trợ bởi S3.
+- Fargate: 
+  - work with EFS
+  - not work with EBS, FSx for lustre??
 
 #### 5. **Automation và Orchestration**:
 - **AWS Batch**: Dịch vụ giúp thực hiện các job song song trên nhiều EC2 instances, dễ dàng lập lịch và quản lý.
@@ -244,3 +266,30 @@ Amazon Elastic Fabric Adapter: optimize network performance for HPC (high-perfor
 # WS Well-Architected Tool
 - là một công cụ giúp bạn kiểm tra, đánh giá và cải thiện kiến trúc của các ứng dụng và hệ thống đang chạy trên AWS
 - AWS Trusted Advisor là một dịch vụ của Amazon Web Services (AWS) cung cấp các khuyến nghị và thực hành tốt nhất (best practices) để giúp tối ưu hóa các tài nguyên AWS, cải thiện hiệu suất, bảo mật, độ tin cậy và giảm chi phí cho hệ thống AWS của bạn.
+
+
+I would recommend option C: Use AWS Network Firewall to create the required rules for traffic inspection and traffic filtering for the production VPC.
+
+AWS Network Firewall is a managed firewall service that provides filtering for both inbound and outbound network traffic. It allows you to create rules for traffic inspection and filtering, which can help protect your production VPC.
+
+Option A: Amazon GuardDuty is a threat detection service, not a traffic inspection or filtering service.
+
+Option B: Traffic Mirroring is a feature that allows you to replicate and send a copy of network traffic from a VPC to another VPC or on-premises location. It is not a service that performs traffic inspection or filtering.
+
+Option D: AWS Firewall Manager is a security management service that helps you to centrally configure and manage firewalls across your accounts. It is not a service that performs traffic inspection or filtering.
+
+# QuickSight
+- Amazon QuickSight only support users(standard version) and groups (enterprise version). users and groups only exists without QuickSight. QuickSight don't support IAM. We use users and groups to view the QuickSight dashboard
+
+# MQ
+- NMS, AMQP, STOMP, MQTT, and WebSocket
+
+# Data exchange 
+- AWS Data Exchange để truy cập dữ liệu đo từ xa của bên thứ ba
+
+# CloudWatch 
+- A CloudWatch Events rule can be used to set up automatic email notifications for Medium to High Severity findings to the email address of your choice. You simply create an Amazon SNS topic and then associate it with an Amazon CloudWatch events rule.
+
+# Inspector: 
+Inspector is more about identifying vulnerabilities and evaluating against security best practices. It does not detect compromise
+# 

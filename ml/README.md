@@ -56,3 +56,6 @@
 - tự động extract text, chữ biết tay hoặc any data từ any scan document => textract => json data 
 
 ![img_4.png](img_4.png)
+
+# Amazon Forecast
+Amazon Forecast is a fully managed service for time-series forecasting, which might not be a complete solution for detecting fraudulent transactions.
